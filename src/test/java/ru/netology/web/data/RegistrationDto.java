@@ -12,4 +12,7 @@ public class RegistrationDto {
     private String login;
     private String password;
     private String status;
+
 }
+
+

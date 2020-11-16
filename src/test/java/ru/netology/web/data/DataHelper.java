@@ -63,35 +63,27 @@ public class DataHelper {
         return userNonExists;
     }
 
-    public static RegistrationDto registerValidAndNonValidLogin() {
+    public static RegistrationDto registerUserWithNonValidLogin() {
         Faker faker = new Faker();
-        val userWithValidLogin = new RegistrationDto(
-                faker.name().firstName(),
-                faker.internet().password(),
-                "active"
-        );
         val userWithNonValidLogin = new RegistrationDto(
                 faker.name().firstName(),
                 faker.internet().password(),
                 "active"
         );
-        setUp(userWithValidLogin);
+        String login = faker.name().firstName();
+        setUp(userWithNonValidLogin);
         return (userWithNonValidLogin);
     }
 
-    public static RegistrationDto registerValidAndNonValidPassword() {
+    public static RegistrationDto registerUserWithNonValidPassword() {
         Faker faker = new Faker();
-        val userWithValidPassword = new RegistrationDto(
-                faker.name().firstName(),
-                faker.internet().password(),
-                "active"
-        );
         val userWithNonValidPassword = new RegistrationDto(
                 faker.name().firstName(),
                 faker.internet().password(),
                 "active"
         );
-        setUp(userWithValidPassword);
+        String password = faker.internet().password();
+        setUp(userWithNonValidPassword);
         return (userWithNonValidPassword);
     }
 }

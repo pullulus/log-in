@@ -1,6 +1,7 @@
 package ru.netology.web.test;
 
 import lombok.val;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.data.DataHelper;
 
@@ -11,10 +12,14 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPageTest {
 
+    @BeforeEach
+    void shouldOpen() {
+        open("http://localhost:9999");
+    }
+
     @Test
     void shouldLogInValidUser() {
         val activeValidUser = DataHelper.registerActiveValidUser();
-        open("http://localhost:9999");
         $("[name= 'login']").setValue(activeValidUser.getLogin());
         $("[name= 'password']").setValue(activeValidUser.getPassword());
         $("[data-test-id= 'action-login']").click();
@@ -24,7 +29,6 @@ public class LoginPageTest {
     @Test
     void shouldNonLogInBlockedUser() {
         val blockedUser = DataHelper.registerBlockedUser();
-        open("http://localhost:9999");
         $("[name= 'login']").setValue(blockedUser.getLogin());
         $("[name= 'password']").setValue(blockedUser.getPassword());
         $("[data-test-id= 'action-login']").click();
@@ -34,7 +38,6 @@ public class LoginPageTest {
     @Test
     void shouldNonLogInUserNonExists() {
         val userNonExists = DataHelper.registerUserNonExists();
-        open("http://localhost:9999");
         $("[name= 'login']").setValue(userNonExists.getLogin());
         $("[name= 'password']").setValue(userNonExists.getPassword());
         $("[data-test-id= 'action-login']").click();
@@ -43,22 +46,18 @@ public class LoginPageTest {
 
     @Test
     void shouldNonLogInUserWithNonValidLogin() {
-        val userWithValidLogin = DataHelper.registerValidAndNonValidLogin();
-        val userWithNonValidLogin = DataHelper.registerValidAndNonValidLogin();
-        open("http://localhost:9999");
-        $("[name= 'login']").setValue(userWithNonValidLogin.getLogin());
-        $("[name= 'password']").setValue(userWithValidLogin.getPassword());
+        val userWithNonValidLogin = DataHelper.registerUserWithNonValidLogin();
+        $("[name= 'login']").setValue(DataHelper.registerUserWithNonValidLogin().getLogin());
+        $("[name= 'password']").setValue(userWithNonValidLogin.getPassword());
         $("[data-test-id= 'action-login']").click();
         $(".notification__content").shouldHave(text("Ошибка! Неверно указан логин или пароль")).shouldBe(visible);
     }
 
     @Test
     void shouldNonLogInUserWithNonValidPassword() {
-        val userWithValidPassword = DataHelper.registerValidAndNonValidPassword();
-        val userWithNonValidPassword = DataHelper.registerValidAndNonValidPassword();
-        open("http://localhost:9999");
-        $("[name= 'login']").setValue(userWithValidPassword.getLogin());
-        $("[name= 'password']").setValue(userWithNonValidPassword.getPassword());
+        val userWithNonValidPassword = DataHelper.registerUserWithNonValidPassword();
+        $("[name= 'login']").setValue(userWithNonValidPassword.getLogin());
+        $("[name= 'password']").setValue(DataHelper.registerUserWithNonValidPassword().getPassword());
         $("[data-test-id= 'action-login']").click();
         $(".notification__content").shouldHave(text("Ошибка! Неверно указан логин или пароль")).shouldBe(visible);
     }
