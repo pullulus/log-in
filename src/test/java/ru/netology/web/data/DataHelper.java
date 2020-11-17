@@ -31,8 +31,9 @@ public class DataHelper {
                 .statusCode(200);
     }
 
+    private static Faker faker = new Faker();
+
     public static RegistrationDto registerActiveValidUser() {
-        Faker faker = new Faker();
         val activeValidUser = new RegistrationDto(
                 faker.name().firstName(),
                 faker.internet().password(),
@@ -43,7 +44,6 @@ public class DataHelper {
     }
 
     public static RegistrationDto registerBlockedUser() {
-        Faker faker = new Faker();
         val blockedUser = new RegistrationDto(
                 faker.name().firstName(),
                 faker.internet().password(),
@@ -54,7 +54,6 @@ public class DataHelper {
     }
 
     public static RegistrationDto registerUserNonExists() {
-        Faker faker = new Faker();
         val userNonExists = new RegistrationDto(
                 faker.name().firstName(),
                 faker.internet().password(),
@@ -64,26 +63,14 @@ public class DataHelper {
     }
 
     public static RegistrationDto registerUserWithNonValidLogin() {
-        Faker faker = new Faker();
-        val userWithNonValidLogin = new RegistrationDto(
-                faker.name().firstName(),
-                faker.internet().password(),
-                "active"
-        );
-        String login = faker.name().firstName();
-        setUp(userWithNonValidLogin);
-        return (userWithNonValidLogin);
+        String password = faker.internet().password();
+        setUp(new RegistrationDto(faker.name().firstName(), password, "active"));
+        return (new RegistrationDto(faker.name().firstName(), password, "active"));
     }
 
     public static RegistrationDto registerUserWithNonValidPassword() {
-        Faker faker = new Faker();
-        val userWithNonValidPassword = new RegistrationDto(
-                faker.name().firstName(),
-                faker.internet().password(),
-                "active"
-        );
-        String password = faker.internet().password();
-        setUp(userWithNonValidPassword);
-        return (userWithNonValidPassword);
+        String login = faker.name().firstName();
+        setUp(new RegistrationDto(login, faker.internet().password(), "active"));
+        return (new RegistrationDto(login, faker.internet().password(), "active"));
     }
 }

@@ -47,7 +47,7 @@ public class LoginPageTest {
     @Test
     void shouldNonLogInUserWithNonValidLogin() {
         val userWithNonValidLogin = DataHelper.registerUserWithNonValidLogin();
-        $("[name= 'login']").setValue(DataHelper.registerUserWithNonValidLogin().getLogin());
+        $("[name= 'login']").setValue(userWithNonValidLogin.getLogin());
         $("[name= 'password']").setValue(userWithNonValidLogin.getPassword());
         $("[data-test-id= 'action-login']").click();
         $(".notification__content").shouldHave(text("Ошибка! Неверно указан логин или пароль")).shouldBe(visible);
@@ -57,7 +57,7 @@ public class LoginPageTest {
     void shouldNonLogInUserWithNonValidPassword() {
         val userWithNonValidPassword = DataHelper.registerUserWithNonValidPassword();
         $("[name= 'login']").setValue(userWithNonValidPassword.getLogin());
-        $("[name= 'password']").setValue(DataHelper.registerUserWithNonValidPassword().getPassword());
+        $("[name= 'password']").setValue(userWithNonValidPassword.getPassword());
         $("[data-test-id= 'action-login']").click();
         $(".notification__content").shouldHave(text("Ошибка! Неверно указан логин или пароль")).shouldBe(visible);
     }
